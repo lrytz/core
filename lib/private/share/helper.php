@@ -221,4 +221,38 @@ class Helper extends \OC\Share\Constants {
 
 		return $expires;
 	}
+
+	/**
+	 * Extracts the necessary remote name from a given link
+	 *
+	 * Strips away the protocol as well as a potential file name, to allow
+	 * - user
+	 * - user@localhost
+	 * - user@http://localhost
+	 * - user@http://localhost/
+	 * - user@http://localhost/index.php
+	 * - user@http://localhost/index.php/s/{shareToken}
+	 *
+	 * @param string $shareWith
+	 * @return string
+	 */
+	public static function fixRemoteURLInShareWith($shareWith) {
+		if (strpos($shareWith, '@')) {
+			list($user, $remote) = explode('@', $shareWith, 2);
+
+			$remote = str_replace('\\', '/', $remote);
+			$remote = rtrim($remote, '/');
+			if ($protocolPosition = strpos($remote, '://')) {
+				$remote = substr($remote, $protocolPosition + 3);
+			}
+			if ($fileNamePosition = strpos($remote, '/index.php')) {
+				$remote = substr($remote, 0, $fileNamePosition);
+				$remote = rtrim($remote, '/');
+			}
+
+			$shareWith = $user . '@' . $remote;
+		}
+
+		return rtrim($shareWith, '/');
+	}
 }
