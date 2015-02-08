@@ -257,6 +257,7 @@ class User implements IUser {
 	 * @return bool
 	 */
 	public function canChangeAvatar() {
+		if ($this->isInGroupDisallowChanges()) return false;
 		if ($this->backend->implementsActions(\OC_User_Backend::PROVIDE_AVATAR)) {
 			return $this->backend->canChangeAvatar($this->uid);
 		}
@@ -269,6 +270,7 @@ class User implements IUser {
 	 * @return bool
 	 */
 	public function canChangePassword() {
+		if ($this->isInGroupDisallowChanges()) return false;
 		return $this->backend->implementsActions(\OC_User_Backend::SET_PASSWORD);
 	}
 
@@ -278,6 +280,7 @@ class User implements IUser {
 	 * @return bool
 	 */
 	public function canChangeDisplayName() {
+		if ($this->isInGroupDisallowChanges()) return false;
 		if ($this->config and $this->config->getSystemValue('allow_user_to_change_display_name') === false) {
 			return false;
 		} else {
@@ -305,5 +308,12 @@ class User implements IUser {
 			$enabled = ($enabled) ? 'true' : 'false';
 			$this->config->setUserValue($this->uid, 'core', 'enabled', $enabled);
 		}
+	}
+
+	public function isInGroupDisallowChanges() {
+		foreach (\OC_Group::getUserGroups($this->uid) as $gid) {
+			if ($gid === 'disallowChanges') return true;
+		}
+		return false;
 	}
 }
