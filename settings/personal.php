@@ -7,6 +7,11 @@
 
 OC_Util::checkLoggedIn();
 
+if (OC_User::isInGroupDisallowChanges(OC_User::getUser())) {
+	header( 'Location: '.OC_Helper::linkToAbsolute( '', 'index.php'));
+	exit();
+}
+
 $defaults = new OC_Defaults(); // initialize themable default strings and urls
 $certificateManager = \OC::$server->getCertificateManager();
 $config = \OC::$server->getConfig();

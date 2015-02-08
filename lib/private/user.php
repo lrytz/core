@@ -494,6 +494,15 @@ class OC_User {
 		}
 	}
 
+	public static function isInGroupDisallowChanges($uid) {
+		$user = self::getManager()->get($uid);
+		if ($user) {
+			return $user->isInGroupDisallowChanges();
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * Check if the password is correct
 	 * @param string $uid The username
