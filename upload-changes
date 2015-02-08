@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+[[ $# -eq 4 ]] || {
+  cat <<EOF
+Usage: $0 <tag> <user,pass> <server> <base>
+Example: $0 v7.0.4 wdysli,*** ftp.fliegen.ch /cloud.fliegen.ch
+EOF
+  exit 1
+}
+
+[[ `which lftp` ]] || {
+  echo "need lftp (os x: brew install lftp)"
+  exit 1
+}
+
+tag="$1"
+cred="$2"
+server="$3"
+base="$4"
+
+if [[ `git tag --list $tag` != "$tag" ]]; then
+  echo "tag doesn't exist: $tag"
+  exit 1
+fi
+
+for f in `git diff --name-only HEAD $tag`; do
+  d=`dirname $f`
+  echo "uploading $base/$f"
+  lftp -c "open -u $cred $server; put -O $base/$d $f"
+done
