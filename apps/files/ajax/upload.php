@@ -67,6 +67,7 @@ if (empty($_POST['dirToken'])) {
 }
 
 OCP\JSON::callCheck();
+OCP\JSON::checkNotInGroupDisallowChanges();
 
 // get array with current storage stats (e.g. max file size)
 $storageStats = \OCA\Files\Helper::buildFileStorageStatistics($dir);

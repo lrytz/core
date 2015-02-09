@@ -89,6 +89,13 @@ class OC_JSON{
 		}
 	}
 
+	public static function checkNotInGroupDisallowChanges() {
+		if (OC_User::isInGroupDisallowChanges(OC_User::getUser())) {
+		  self::error(array( 'data' => array( 'message' => 'No permission to perform this action.' )));
+		  exit();
+		}
+	}
+
 	/**
 	* Send json error msg
 	*/
