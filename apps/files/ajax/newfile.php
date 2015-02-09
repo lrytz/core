@@ -21,6 +21,8 @@ if($source) {
 	OC_JSON::callCheck();
 }
 
+OCP\JSON::checkNotInGroupDisallowChanges();
+
 function progress($notification_code, $severity, $message, $message_code, $bytes_transferred, $bytes_max) {
 	static $filesize = 0;
 	static $lastsize = 0;
