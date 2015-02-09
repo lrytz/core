@@ -29,6 +29,7 @@ global $eventSource;
 
 \OCP\JSON::checkLoggedIn();
 \OCP\JSON::callCheck();
+OCP\JSON::checkNotInGroupDisallowChanges();
 
 \OC::$server->getSession()->close();
 

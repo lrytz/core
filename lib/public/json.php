@@ -175,6 +175,10 @@ class JSON {
 		\OC_JSON::checkAdminUser();
 	}
 
+	public static function checkNotInGroupDisallowChanges() {
+		return(\OC_JSON::checkNotInGroupDisallowChanges());
+	}
+
 	/**
 	 * Encode JSON
 	 * @param array $data
