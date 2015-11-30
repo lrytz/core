@@ -152,4 +152,8 @@ class User {
 	public static function checkLoggedIn() {
 		\OC_Util::checkLoggedIn();
 	}
+
+	public static function isInGroupDisallowChanges() {
+		return \OC_User::isInGroupDisallowChanges(\OC_User::getUser());
+	}
 }

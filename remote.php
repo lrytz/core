@@ -86,6 +86,11 @@ function handleException(Exception $e) {
 try {
 	require_once 'lib/base.php';
 
+	if (\OCP\User::isInGroupDisallowChanges()) {
+	  // Disable remote clients (WebDAV, Desktop apps, Mobile apps)
+	  exit();
+	}
+
 	if (\OCP\Util::needUpgrade()) {
 		// since the behavior of apps or remotes are unpredictable during
 		// an upgrade, return a 503 directly
