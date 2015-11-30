@@ -1,0 +1,20 @@
+How to upgrade
+  - Go to Plesk file manager.
+  - Move all files and folders, except "data", to a new "old" directory
+  - Backup DB
+  - Upload new release zip file
+  - Unpack in Plesk, goes to an "owncloud" subdirectory
+  - Move content from "owncloud" up
+  - Copy config.php from old/config
+  - Open site, DB will be updated
+  - Delete the content from core/skeleton
+
+Upload Patches
+  - Check out https://github.com/lrytz/core, add upstream remote
+  - Fetch from upstream
+  - Create new branch (fliegen-patch-vX.Y.Z) starting at tag vX.Y.X
+  - Cherry-pick changes from previous branch
+  - Run ./upload-changes
+
+Bug in 8.2.1
+  - If "Link Sharing" is disabled, then sharing a folder to a user doesn't work, probably an UI issue.
