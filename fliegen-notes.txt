@@ -13,15 +13,14 @@ On the remote machine
   - git fetch origin --tags
   - git checkout fliegen-patch-v8.2.9
   - update 3rdparty
-    git submodule update --init --recursive
-  - update apps2
-    cd apps2
-    git fetch origin --tags
-    git branch branch-v8.2.9 v8.2.9
-    git checkout branch-v8.2.9
-
-Some apps are in core/apps, some in apps2, which is a separate repo.
-config/config.php has both directories listed as containig apps.
+    - git submodule update --init --recursive
+  - copy missing apps: only some apps are in the core repo, the release contains more
+    - cd release
+    - rm -rf owncloud
+    - wget https://download.owncloud.org/community/owncloud-8.2.9.zip
+    - unzip owncloud-8.2.9.zip
+    - cd ..
+    - ./copy-apps
 
 -- Previously, before using git --
 
