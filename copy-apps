@@ -1,0 +1,12 @@
+INSTALL=/cloud.fliegen.ch/apps
+RELEASE=/cloud.fliegen.ch/release/owncloud/apps
+
+for app in $RELEASE/*; do
+  name=$(basename $app)
+  if [ ! -e $INSTALL/$name ]; then
+    echo "copy $app"
+    cp -r $app $INSTALL/
+  else
+    echo "not $app"
+  fi
+done
