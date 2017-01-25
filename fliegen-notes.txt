@@ -1,3 +1,30 @@
+Upgrade
+
+In local checkout
+  - git fetch upstream --tags
+  - git branch fliegen-patch-v8.2.9 v8.2.9
+  - git checkout fliegen-patch-v8.2.9
+  - git cherry-pick ... (from previous patch branch)
+  - git push (to lrytz/core)
+  - verify diffs
+
+On the remote machine
+  - ssh wdysli@80.74.129.65 -p2121
+  - git fetch origin --tags
+  - git checkout fliegen-patch-v8.2.9
+  - update 3rdparty
+    git submodule update --init --recursive
+  - update apps2
+    cd apps2
+    git fetch origin --tags
+    git branch branch-v8.2.9 v8.2.9
+    git checkout branch-v8.2.9
+
+Some apps are in core/apps, some in apps2, which is a separate repo.
+config/config.php has both directories listed as containig apps.
+
+-- Previously, before using git --
+
 How to upgrade
   - Go to Plesk file manager.
   - Move all files and folders, except "data", to a new "old" directory
